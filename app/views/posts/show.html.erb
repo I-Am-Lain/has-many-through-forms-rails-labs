@@ -8,7 +8,7 @@
 
 <%= form_for @comment do |c| %>
     <%= c.hidden_field :post_id, value: @post.id %>
-    <%= c.collection_select :user_id, User.all, :id, :username %>
+    <%= c.collection_select :user_id, User.all, :id, :username, {include_blank: ''} %>
 
     <br>
 
