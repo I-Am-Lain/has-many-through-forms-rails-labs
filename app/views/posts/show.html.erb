@@ -1,1 +1,55 @@
+<h1> POST SHOW </h1>
 
+<h2><%= @post.title %></h2>
+
+<p><%= @post.content %><p>
+
+<br>
+
+<%= form_for @comment do |c| %>
+    <%= c.hidden_field :post_id, value: @post.id %>
+    <%= c.collection_select :user_id, User.all, :id, :username %>
+
+    <br>
+
+    <%= c.fields_for :user, User.new do |u| %>
+        <%= u.label :username %>
+        <%= u.text_field :username %>
+    <% end %>
+
+    <br>
+
+
+    <%= c.label :content %>
+    <%= c.text_area :content %>
+
+
+    <br><br>
+    <%= c.submit %>
+<% end %>
+
+<br>
+
+<h3> CATEGORIES </h3>
+<ul>
+    <% @post.categories.each do |c| %>
+        <li><%= c.name %></li>
+    <% end %>
+</ul>
+
+<br>
+
+<h3> COMMENTS </h3>
+<ul>
+    <% @post.comments.each do |c| %>
+        <p><%= c.user.username %> says: <%= c.content %><p>
+        <br><br>
+    <% end %>
+</ul>
+
+<h3> UNIQUE VISITS </h3>
+<ul>
+    <% @post.unique_visitors.each do |u| %>
+        <%= link_to u.username, user_path(u) %>
+    <% end %>
+</ul>
